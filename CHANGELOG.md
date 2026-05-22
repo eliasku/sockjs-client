@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.0.4
+
+- fix compat with `IStompSocket`
+
 ## 0.0.3
 
 - fix missing `onopen`

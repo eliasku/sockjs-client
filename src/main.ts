@@ -42,10 +42,10 @@ export class SockJS extends EventTarget {
   _transport: any = null;
   transport: string | null = null;
   _transportTimeoutId: any = null;
-  onopen?: (e: any) => void;
-  onmessage?: (msg: any) => void;
-  onclose?: (e: any) => void;
-  onerror?: (e: any) => void;
+  onopen: ((e?: any) => any) | undefined | null = null;
+  onmessage: ((msg: any) => any) | undefined | null = null;
+  onclose: ((e?: any) => any) | undefined | null = null;
+  onerror: ((e: any) => any) | undefined | null = null;
 
   constructor(url: string, protocols?: string | string[], options?: any) {
     super();
@@ -367,7 +367,7 @@ export class SockJS extends EventTarget {
         e.reason = reason;
 
         this.dispatchEvent(e);
-        this.onmessage = this.onclose = this.onerror = undefined;
+        this.onmessage = this.onclose = this.onerror = null;
         debug("disconnected");
       }.bind(this),
       0,
