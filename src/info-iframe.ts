@@ -3,7 +3,7 @@ import * as eventUtils from "./utils/event";
 import { IframeTransport } from "./transport/iframe";
 import { InfoReceiverIframe } from "./info-iframe-receiver";
 
-const debug = (...args: any[]) => console.log("[sockjs-client:info-iframe]", ...args);
+const debug = (...args: any[]) => __DEBUG__ && console.log("[sockjs-client:info-iframe]", ...args);
 
 export class InfoIframe extends EventEmitter {
   static enabled: () => boolean;

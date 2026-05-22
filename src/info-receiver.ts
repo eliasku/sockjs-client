@@ -6,7 +6,7 @@ import { XHRFake } from "./transport/sender/xhr-fake";
 import { InfoIframe } from "./info-iframe";
 import { InfoAjax } from "./info-ajax";
 
-const debug = (...args: any[]) => console.log("[sockjs-client:info-receiver]", ...args);
+const debug = (...args: any[]) => __DEBUG__ && console.log("[sockjs-client:info-receiver]", ...args);
 
 export class InfoReceiver extends EventEmitter {
   static _getReceiver: (baseUrl: string, url: string, urlInfo: any) => any;

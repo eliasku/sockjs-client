@@ -1,6 +1,6 @@
 import { EventEmitter } from "../../event/emitter";
 
-const debug = (...args: any[]) => console.log("[sockjs-client:buffered-sender]", ...args);
+const debug = (...args: any[]) => __DEBUG__ && console.log("[sockjs-client:buffered-sender]", ...args);
 
 export class BufferedSender extends EventEmitter {
   sendBuffer: string[];

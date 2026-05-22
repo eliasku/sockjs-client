@@ -1,4 +1,4 @@
-const debug = (...args: any[]) => console.log("[sockjs-client:utils:transport]", ...args);
+const debug = (...args: any[]) => __DEBUG__ && console.log("[sockjs-client:utils:transport]", ...args);
 
 export function createTransportUtils(availableTransports: any[]) {
   return {

@@ -3,7 +3,7 @@ import * as random from "../../utils/random";
 import * as urlUtils from "../../utils/url";
 import { EventEmitter } from "../../event/emitter";
 
-const debug = (...args: any[]) => console.log("[sockjs-client:receiver:jsonp]", ...args);
+const debug = (...args: any[]) => __DEBUG__ && console.log("[sockjs-client:receiver:jsonp]", ...args);
 
 export class JsonpReceiver extends EventEmitter {
   id: string;

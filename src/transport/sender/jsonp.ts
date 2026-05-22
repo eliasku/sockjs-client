@@ -1,7 +1,7 @@
 import * as random from "../../utils/random";
 import * as urlUtils from "../../utils/url";
 
-const debug = (...args: any[]) => console.log("[sockjs-client:sender:jsonp]", ...args);
+const debug = (...args: any[]) => __DEBUG__ && console.log("[sockjs-client:sender:jsonp]", ...args);
 
 let form: HTMLFormElement | null = null;
 let area: HTMLTextAreaElement | null = null;

@@ -12,9 +12,8 @@ import { loc } from "./location";
 import { CloseEvent } from "./event/close";
 import { TransportMessageEvent } from "./event/trans-message";
 import { InfoReceiver } from "./info-receiver";
-import { version } from "./version";
 
-const debug = (...args: any[]) => console.log("[sockjs-client:main]", ...args);
+const debug = (...args: any[]) => __DEBUG__ && console.log("[sockjs-client:main]", ...args);
 
 let transports: any;
 
@@ -23,7 +22,7 @@ export class SockJS extends EventTarget {
   static OPEN = 1;
   static CLOSING = 2;
   static CLOSED = 3;
-  static version: string = version;
+  static version = __SOCKJS_VERSION__;
 
   readyState: number = 0;
   extensions: string = "";

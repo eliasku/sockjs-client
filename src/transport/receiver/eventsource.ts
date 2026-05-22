@@ -2,7 +2,7 @@ import { EventEmitter } from "../../event/emitter";
 
 const EventSourceBrowserDriver: any = (globalThis as any).EventSource;
 
-const debug = (...args: any[]) => console.log("[sockjs-client:receiver:eventsource]", ...args);
+const debug = (...args: any[]) => __DEBUG__ && console.log("[sockjs-client:receiver:eventsource]", ...args);
 
 function decodeURISafe(s: string): string {
   return decodeURI(s.replace(/%(?![0-9][0-9a-fA-F]+)/g, "%25"));

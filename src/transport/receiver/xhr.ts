@@ -1,6 +1,6 @@
 import { EventEmitter } from "../../event/emitter";
 
-const debug = (...args: any[]) => console.log("[sockjs-client:receiver:xhr]", ...args);
+const debug = (...args: any[]) => __DEBUG__ && console.log("[sockjs-client:receiver:xhr]", ...args);
 
 export class XhrReceiver extends EventEmitter {
   bufferPosition: number;

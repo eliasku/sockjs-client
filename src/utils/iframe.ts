@@ -1,6 +1,6 @@
 import * as eventUtils from "./event";
 
-const debug = (...args: any[]) => console.log("[sockjs-client:utils:iframe]", ...args);
+const debug = (...args: any[]) => __DEBUG__ && console.log("[sockjs-client:utils:iframe]", ...args);
 
 const WPrefix = "_jp";
 let currentWindowId: string | null = null;

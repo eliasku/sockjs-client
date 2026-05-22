@@ -5,7 +5,7 @@ import { InfoReceiverIframe } from "./info-iframe-receiver";
 import * as iframeUtils from "./utils/iframe";
 import { loc } from "./location";
 
-const debug = (...args: any[]) => console.log("[sockjs-client:iframe-bootstrap]", ...args);
+const debug = (...args: any[]) => __DEBUG__ && console.log("[sockjs-client:iframe-bootstrap]", ...args);
 
 export function bootstrap_iframe(SockJS: any, availableTransports: any[]): void {
   const transportMap: Record<string, any> = {};

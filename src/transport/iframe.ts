@@ -1,11 +1,10 @@
 import { EventEmitter } from "../event/emitter";
-import { version } from "../version";
 import * as urlUtils from "../utils/url";
 import * as iframeUtils from "../utils/iframe";
 import * as eventUtils from "../utils/event";
 import * as random from "../utils/random";
 
-const debug = (...args: any[]) => console.log("[sockjs-client:transport:iframe]", ...args);
+const debug = (...args: any[]) => __DEBUG__ && console.log("[sockjs-client:transport:iframe]", ...args);
 
 export class IframeTransport extends EventEmitter {
   origin: string | null;
@@ -84,7 +83,7 @@ export class IframeTransport extends EventEmitter {
     switch (iframeMessage.type) {
       case "s":
         this.iframeObj.loaded();
-        this.postMessage("s", JSON.stringify([version, this.transport, this.transUrl, this.baseUrl]));
+        this.postMessage("s", JSON.stringify([__SOCKJS_VERSION__, this.transport, this.transUrl, this.baseUrl]));
         break;
       case "t":
         this.emit("message", iframeMessage.data);

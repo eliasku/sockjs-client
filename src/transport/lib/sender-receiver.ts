@@ -2,7 +2,7 @@ import * as urlUtils from "../../utils/url";
 import { BufferedSender } from "./buffered-sender";
 import { Polling } from "./polling";
 
-const debug = (...args: any[]) => console.log("[sockjs-client:sender-receiver]", ...args);
+const debug = (...args: any[]) => __DEBUG__ && console.log("[sockjs-client:sender-receiver]", ...args);
 
 export class SenderReceiver extends BufferedSender {
   poll: Polling | null;

@@ -1,7 +1,7 @@
 import { EventEmitter } from "./event/emitter";
 import * as objectUtils from "./utils/object";
 
-const debug = (...args: any[]) => console.log("[sockjs-client:info-ajax]", ...args);
+const debug = (...args: any[]) => __DEBUG__ && console.log("[sockjs-client:info-ajax]", ...args);
 
 export class InfoAjax extends EventEmitter {
   xo: any;

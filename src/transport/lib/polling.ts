@@ -1,6 +1,6 @@
 import { EventEmitter } from "../../event/emitter";
 
-const debug = (...args: any[]) => console.log("[sockjs-client:polling]", ...args);
+const debug = (...args: any[]) => __DEBUG__ && console.log("[sockjs-client:polling]", ...args);
 
 export class Polling extends EventEmitter {
   Receiver: any;

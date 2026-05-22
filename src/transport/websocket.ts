@@ -3,7 +3,7 @@ import * as urlUtils from "../utils/url";
 import { EventEmitter } from "../event/emitter";
 import { WebSocketBrowserDriver } from "./browser/websocket";
 
-const debug = (...args: any[]) => console.log("[sockjs-client:websocket]", ...args);
+const debug = (...args: any[]) => __DEBUG__ && console.log("[sockjs-client:websocket]", ...args);
 
 export class WebSocketTransport extends EventEmitter {
   url: string;
@@ -14,7 +14,7 @@ export class WebSocketTransport extends EventEmitter {
   static transportName: string = "websocket";
   static roundTrips: number = 2;
 
-  constructor(transUrl: string, ignore?: any, options?: any) {
+  constructor(transUrl: string, _ignore?: any, options?: any) {
     super();
     if (!WebSocketTransport.enabled()) {
       throw new Error("Transport created when disabled");

@@ -4,7 +4,7 @@ import * as urlUtils from "../../utils/url";
 
 const XHR: any = (globalThis as any).XMLHttpRequest;
 
-const debug = (...args: any[]) => console.log("[sockjs-client:browser:xhr]", ...args);
+const debug = (...args: any[]) => __DEBUG__ && console.log("[sockjs-client:browser:xhr]", ...args);
 
 export class AbstractXHRObject extends EventEmitter {
   xhr!: XMLHttpRequest;

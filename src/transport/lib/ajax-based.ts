@@ -1,7 +1,7 @@
 import * as urlUtils from "../../utils/url";
 import { SenderReceiver } from "./sender-receiver";
 
-const debug = (...args: any[]) => console.log("[sockjs-client:ajax-based]", ...args);
+const debug = (...args: any[]) => __DEBUG__ && console.log("[sockjs-client:ajax-based]", ...args);
 
 type AjaxSender = (url: string, payload: string, callback: (err?: Error) => void) => () => void;
 
