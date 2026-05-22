@@ -1,13 +1,13 @@
 {
   "name": "@eliasku/sockjs-client",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "module": "dist/sockjs.js",
-  "types": "dist/sockjs.d.ts",
+  "types": "dist/main.d.ts",
   "type": "module",
   "exports": {
     ".": {
       "import": "./dist/sockjs.js",
-      "types": "./dist/sockjs.d.ts"
+      "types": "./dist/main.d.ts"
     }
   },
   "files": [
