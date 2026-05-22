@@ -1,0 +1,13 @@
+{
+  "printWidth": 120,
+  "tabWidth": 2,
+  "useTabs": false,
+  "semi": true,
+  "singleQuote": false,
+  "trailingComma": "all",
+  "bracketSpacing": true,
+  "arrowParens": "avoid",
+  "endOfLine": "lf",
+  "sortPackageJson": false,
+  "ignorePatterns": ["*.js", "*.gen.ts", "dist", "out", "node_modules", "playwright-report"]
+}

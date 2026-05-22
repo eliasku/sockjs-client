@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "lib": ["ESNext", "DOM"],
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleDetection": "force",
+    "jsx": "react-jsx",
+    "allowJs": true,
+    "types": ["bun"],
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "verbatimModuleSyntax": false,
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "declarationDir": "./dist",
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "noEmit": false,
+    "strict": false,
+    "skipLibCheck": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": false,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "noPropertyAccessFromIndexSignature": false
+  },
+  "include": ["./src/**/*.ts"]
+}

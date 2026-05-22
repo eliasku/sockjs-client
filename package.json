@@ -1,0 +1,31 @@
+{
+  "name": "sockts",
+  "module": "dist/sockjs.js",
+  "types": "dist/sockjs.d.ts",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/sockjs.js",
+      "types": "./dist/sockjs.d.ts"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "typecheck": "tsc",
+    "fix": "oxfmt && oxlint --fix",
+    "lint": "oxlint",
+    "lint:fix": "oxlint --fix",
+    "format": "oxfmt",
+    "format:check": "oxfmt --check",
+    "build": "rolldown -c rolldown.config.ts && tsc -p tsconfig.build.json"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.3.14",
+    "oxfmt": "^0.51.0",
+    "oxlint": "^1.66.0",
+    "rolldown": "^1.0.2",
+    "typescript": "^6.0.3"
+  }
+}
