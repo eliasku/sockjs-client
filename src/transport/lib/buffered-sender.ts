@@ -2,7 +2,7 @@ import { EventEmitter } from "../../event/emitter";
 
 const debug = (...args: any[]) => console.log("[sockjs-client:buffered-sender]", ...args);
 
-class BufferedSender extends EventEmitter {
+export class BufferedSender extends EventEmitter {
   sendBuffer: string[];
   sender: (url: string, payload: string, callback: (err?: any) => void) => () => void;
   url: string;
@@ -27,33 +27,31 @@ class BufferedSender extends EventEmitter {
 
   sendScheduleWait(): void {
     debug("sendScheduleWait");
-    const self = this;
     let tref: ReturnType<typeof setTimeout>;
-    this.sendStop = function () {
+    this.sendStop = () => {
       debug("sendStop");
-      self.sendStop = null;
+      this.sendStop = null;
       clearTimeout(tref);
     };
-    tref = setTimeout(function () {
+    tref = setTimeout(() => {
       debug("timeout");
-      self.sendStop = null;
-      self.sendSchedule();
+      this.sendStop = null;
+      this.sendSchedule();
     }, 25);
   }
 
   sendSchedule(): void {
     debug("sendSchedule", this.sendBuffer.length);
-    const self = this;
     if (this.sendBuffer.length > 0) {
       const payload = `[${this.sendBuffer.join(",")}]`;
-      this.sendStop = this.sender(this.url, payload, function (err?: any) {
-        self.sendStop = null;
+      this.sendStop = this.sender(this.url, payload, (err?: any) => {
+        this.sendStop = null;
         if (err) {
           debug("error", err);
-          self.emit("close", err.code || 1006, `Sending error: ${err}`);
-          self.close();
+          this.emit("close", err.code || 1006, `Sending error: ${err}`);
+          this.close();
         } else {
-          self.sendScheduleWait();
+          this.sendScheduleWait();
         }
       });
       this.sendBuffer = [];
@@ -74,5 +72,3 @@ class BufferedSender extends EventEmitter {
     }
   }
 }
-
-export { BufferedSender };

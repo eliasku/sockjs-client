@@ -1,4 +1,4 @@
-class EventTarget {
+export class EventTarget {
   _listeners: Record<string, Function[]>;
 
   constructor() {
@@ -31,10 +31,9 @@ class EventTarget {
     }
   }
 
-  dispatchEvent(...args: any[]): void {
-    const event = arguments[0];
+  dispatchEvent(event: any, ...extraArgs: any[]): void {
     const t = event.type;
-    const argsArray = arguments.length === 1 ? [event] : Array.apply(null, arguments as any);
+    const argsArray = extraArgs.length > 0 ? [event, ...extraArgs] : [event];
     const onHandler = (this as any)["on" + t];
     if (onHandler) {
       onHandler.apply(this, argsArray);
@@ -50,5 +49,3 @@ class EventTarget {
     }
   }
 }
-
-export { EventTarget };

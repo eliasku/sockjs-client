@@ -4,24 +4,23 @@ import { Polling } from "./polling";
 
 const debug = (...args: any[]) => console.log("[sockjs-client:sender-receiver]", ...args);
 
-class SenderReceiver extends BufferedSender {
+export class SenderReceiver extends BufferedSender {
   poll: Polling | null;
 
   constructor(transUrl: string, urlSuffix: string, senderFunc: any, Receiver: any, AjaxObject?: any) {
     const pollUrl = urlUtils.addPath(transUrl, urlSuffix);
     debug(pollUrl);
     super(transUrl, senderFunc);
-    const self = this;
     this.poll = new Polling(Receiver, pollUrl, AjaxObject);
-    this.poll.on("message", function (msg: string) {
+    this.poll.on("message", (msg: string) => {
       debug("poll message", msg);
-      self.emit("message", msg);
+      this.emit("message", msg);
     });
-    this.poll.once("close", function (code: number, reason: string) {
+    this.poll.once("close", (code: number, reason: string) => {
       debug("poll close", code, reason);
-      self.poll = null;
-      self.emit("close", code, reason);
-      self.close();
+      this.poll = null;
+      this.emit("close", code, reason);
+      this.close();
     });
   }
 
@@ -35,5 +34,3 @@ class SenderReceiver extends BufferedSender {
     }
   }
 }
-
-export { SenderReceiver };

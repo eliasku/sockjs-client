@@ -1,6 +1,6 @@
 import { EventTarget } from "./eventtarget";
 
-class EventEmitter extends EventTarget {
+export class EventEmitter extends EventTarget {
   on(type: string, listener: Function): void {
     this.addEventListener(type, listener);
   }
@@ -22,16 +22,15 @@ class EventEmitter extends EventTarget {
   }
 
   once(type: string, listener: Function): void {
-    const self = this;
     let fired = false;
 
-    function g(this: any, ...args: any[]) {
-      self.removeListener(type, g);
+    const g = (...args: any[]) => {
+      this.removeListener(type, g);
       if (!fired) {
         fired = true;
         listener.apply(this, args);
       }
-    }
+    };
 
     this.on(type, g);
   }
@@ -49,5 +48,3 @@ class EventEmitter extends EventTarget {
     }
   }
 }
-
-export { EventEmitter };

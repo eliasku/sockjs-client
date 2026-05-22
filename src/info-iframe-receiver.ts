@@ -2,17 +2,16 @@ import { EventEmitter } from "./event/emitter";
 import { XHRLocalObject } from "./transport/sender/xhr-local";
 import { InfoAjax } from "./info-ajax";
 
-class InfoReceiverIframe extends EventEmitter {
+export class InfoReceiverIframe extends EventEmitter {
   static transportName: string;
   ir: any;
 
   constructor(transUrl: string) {
     super();
-    const self = this;
     this.ir = new InfoAjax(transUrl, XHRLocalObject);
-    this.ir.once("finish", function (info: any, rtt: number) {
-      self.ir = null;
-      self.emit("message", JSON.stringify([info, rtt]));
+    this.ir.once("finish", (info: any, rtt: number) => {
+      this.ir = null;
+      this.emit("message", JSON.stringify([info, rtt]));
     });
   }
 
@@ -26,5 +25,3 @@ class InfoReceiverIframe extends EventEmitter {
 }
 
 InfoReceiverIframe.transportName = "iframe-info-receiver";
-
-export { InfoReceiverIframe };

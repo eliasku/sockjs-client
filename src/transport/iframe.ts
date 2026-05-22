@@ -7,7 +7,7 @@ import * as random from "../utils/random";
 
 const debug = (...args: any[]) => console.log("[sockjs-client:transport:iframe]", ...args);
 
-class IframeTransport extends EventEmitter {
+export class IframeTransport extends EventEmitter {
   origin: string | null;
   baseUrl: string;
   transUrl: string;
@@ -124,5 +124,3 @@ class IframeTransport extends EventEmitter {
 IframeTransport.enabled = function (): boolean {
   return iframeUtils.iframeEnabled;
 };
-
-export { IframeTransport };

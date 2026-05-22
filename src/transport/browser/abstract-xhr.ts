@@ -6,7 +6,7 @@ const XHR: any = (globalThis as any).XMLHttpRequest;
 
 const debug = (...args: any[]) => console.log("[sockjs-client:browser:xhr]", ...args);
 
-class AbstractXHRObject extends EventEmitter {
+export class AbstractXHRObject extends EventEmitter {
   xhr!: XMLHttpRequest;
   unloadRef: any;
   timeout: number | undefined;
@@ -17,19 +17,15 @@ class AbstractXHRObject extends EventEmitter {
   constructor(method: string, url: string, payload?: string | null, opts?: any) {
     super();
     debug(method, url);
-    const self = this;
-
-    setTimeout(function () {
-      self._start(method, url, payload, opts);
+    setTimeout(() => {
+      this._start(method, url, payload, opts);
     }, 0);
   }
 
   _start(method: string, url: string, payload?: string | null, opts?: any): void {
-    const self = this;
-
     try {
       this.xhr = new XHR();
-    } catch (x) {
+    } catch {
       // intentionally empty
     }
 
@@ -40,20 +36,20 @@ class AbstractXHRObject extends EventEmitter {
       return;
     }
 
-    url = urlUtils.addQuery(url, "t=" + +new Date());
+    url = urlUtils.addQuery(url, `t=${Date.now()}`);
 
-    this.unloadRef = utils.unloadAdd(function () {
+    this.unloadRef = utils.unloadAdd(() => {
       debug("unload cleanup");
-      self._cleanup(true);
+      this._cleanup(true);
     });
     try {
       this.xhr.open(method, url, true);
       if (this.timeout && "timeout" in this.xhr) {
         this.xhr.timeout = this.timeout;
-        this.xhr.ontimeout = function () {
+        this.xhr.ontimeout = () => {
           debug("xhr timeout");
-          self.emit("finish", 0, "");
-          self._cleanup(false);
+          this.emit("finish", 0, "");
+          this._cleanup(false);
         };
       }
     } catch (e) {
@@ -73,9 +69,9 @@ class AbstractXHRObject extends EventEmitter {
       }
     }
 
-    this.xhr.onreadystatechange = function () {
-      if (self.xhr) {
-        const x = self.xhr;
+    this.xhr.onreadystatechange = () => {
+      if (this.xhr) {
+        const x = this.xhr;
         let text: string | undefined;
         let status: number | undefined;
         debug("readyState", x.readyState);
@@ -84,32 +80,23 @@ class AbstractXHRObject extends EventEmitter {
             try {
               status = x.status;
               text = x.responseText;
-            } catch (e) {
+            } catch {
               // intentionally empty
             }
             debug("status", status);
-            if (status === 1223) {
-              status = 204;
-            }
 
             if (status === 200 && text && text.length > 0) {
               debug("chunk");
-              self.emit("chunk", status, text);
+              this.emit("chunk", status, text);
             }
             break;
           case 4:
             status = x.status;
             debug("status", status);
-            if (status === 1223) {
-              status = 204;
-            }
-            if (status === 12005 || status === 12029) {
-              status = 0;
-            }
 
             debug("finish", status, x.responseText);
-            self.emit("finish", status, x.responseText);
-            self._cleanup(false);
+            this.emit("finish", status, x.responseText);
+            this._cleanup(false);
             break;
         }
       }
@@ -117,9 +104,9 @@ class AbstractXHRObject extends EventEmitter {
 
     try {
       this.xhr.send(payload);
-    } catch (e) {
-      self.emit("finish", 0, "");
-      self._cleanup(false);
+    } catch {
+      this.emit("finish", 0, "");
+      this._cleanup(false);
     }
   }
 
@@ -139,7 +126,7 @@ class AbstractXHRObject extends EventEmitter {
     if (abort) {
       try {
         this.xhr.abort();
-      } catch (x) {
+      } catch {
         // intentionally empty
       }
     }
@@ -152,27 +139,4 @@ class AbstractXHRObject extends EventEmitter {
   }
 }
 
-let _XHR: any = XHR;
-const axo = ["Active"].concat("Object").join("X");
-if (!AbstractXHRObject.enabled && axo in globalThis) {
-  debug("overriding xmlhttprequest");
-  _XHR = function () {
-    try {
-      return new (globalThis as any)[axo]("Microsoft.XMLHTTP");
-    } catch (e) {
-      return null;
-    }
-  };
-  AbstractXHRObject.enabled = !!new _XHR();
-}
-
-let cors = false;
-try {
-  cors = "withCredentials" in new _XHR();
-} catch (ignored) {
-  // intentionally empty
-}
-
-AbstractXHRObject.supportsCORS = cors;
-
-export { AbstractXHRObject };
+AbstractXHRObject.supportsCORS = typeof XHR === "function" && "withCredentials" in XHR.prototype;

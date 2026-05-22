@@ -1,6 +1,6 @@
 const debug = (...args: any[]) => console.log("[sockjs-client:utils:transport]", ...args);
 
-function createTransportUtils(availableTransports: any[]) {
+export function createTransportUtils(availableTransports: any[]) {
   return {
     filterToEnabled: function (transportsWhitelist: any, info: any) {
       const transports: { main: any[]; facade: any[] } = {
@@ -42,5 +42,3 @@ function createTransportUtils(availableTransports: any[]) {
     },
   };
 }
-
-export { createTransportUtils };

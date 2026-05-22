@@ -1,5 +1,4 @@
 import * as eventUtils from "./event";
-import * as browser from "./browser";
 
 const debug = (...args: any[]) => console.log("[sockjs-client:utils:iframe]", ...args);
 
@@ -107,72 +106,6 @@ function createIframe(iframeUrl: string, errorCallback: (err: string) => void): 
   };
 }
 
-function createHtmlfile(iframeUrl: string, errorCallback: (err: string) => void): IfaceResult {
-  const axo = ["Active"].concat("Object").join("X");
-  let doc: any = new (globalThis as any)[axo]("htmlfile");
-  let tref: ReturnType<typeof setTimeout>;
-  let unloadRef: string | null;
-  let iframe: HTMLIFrameElement | null;
-  const unattach = function () {
-    clearTimeout(tref);
-    (iframe as any).onerror = null;
-  };
-  const cleanup = function () {
-    if (doc) {
-      unattach();
-      if (unloadRef !== null && unloadRef !== undefined) {
-        eventUtils.unloadDel(unloadRef!);
-      }
-      iframe!.parentNode!.removeChild(iframe!);
-      iframe = null;
-      doc = null;
-      CollectGarbage();
-    }
-  };
-  const onerror = function (r: string) {
-    debug("onerror", r);
-    if (doc) {
-      cleanup();
-      errorCallback(r);
-    }
-  };
-  const post = function (msg: any, origin: string) {
-    try {
-      setTimeout(function () {
-        if (iframe && iframe.contentWindow) {
-          iframe.contentWindow.postMessage(msg, origin);
-        }
-      }, 0);
-    } catch {
-      // intentionally empty
-    }
-  };
-
-  doc.open();
-  doc.write(
-    "<html><s" + "cript>" + 'document.domain="' + (globalThis as any).document.domain + '";' + "</s" + "cript></html>",
-  );
-  doc.close();
-  doc.parentWindow[WPrefix] = (globalThis as any)[WPrefix];
-  const c = doc.createElement("div");
-  doc.body.appendChild(c);
-  iframe = doc.createElement("iframe");
-  c.appendChild(iframe);
-  iframe!.src = iframeUrl;
-  iframe!.onerror = function () {
-    onerror("onerror");
-  };
-  tref = setTimeout(function () {
-    onerror("timeout");
-  }, 15000);
-  unloadRef = eventUtils.unloadAdd(cleanup);
-  return {
-    post: post,
-    cleanup: cleanup,
-    loaded: unattach,
-  };
-}
-
 function setCurrentWindowId(id: string | null): void {
   currentWindowId = id;
 }
@@ -180,8 +113,7 @@ function setCurrentWindowId(id: string | null): void {
 let iframeEnabled = false;
 if ((globalThis as any).document) {
   iframeEnabled =
-    (typeof (globalThis as any).postMessage === "function" || typeof (globalThis as any).postMessage === "object") &&
-    !browser.isKonqueror();
+    typeof (globalThis as any).postMessage === "function" || typeof (globalThis as any).postMessage === "object";
 }
 
 export {
@@ -191,8 +123,5 @@ export {
   polluteGlobalNamespace,
   postMessage,
   createIframe,
-  createHtmlfile,
   iframeEnabled,
 };
-
-declare function CollectGarbage(): void;

@@ -4,7 +4,7 @@ import { XHRCorsObject } from "./sender/xhr-cors";
 
 const EventSourceBrowserDriver: any = (globalThis as any).EventSource;
 
-class EventSourceTransport extends AjaxBasedTransport {
+export class EventSourceTransport extends AjaxBasedTransport {
   static enabled: any;
   static transportName: string = "eventsource";
   static roundTrips: number = 2;
@@ -21,5 +21,3 @@ class EventSourceTransport extends AjaxBasedTransport {
 EventSourceTransport.enabled = function (): boolean {
   return !!EventSourceBrowserDriver;
 };
-
-export { EventSourceTransport };

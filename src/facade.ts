@@ -1,6 +1,6 @@
 import * as iframeUtils from "./utils/iframe";
 
-class FacadeJS {
+export class FacadeJS {
   _transport: any;
 
   constructor(transport: any) {
@@ -26,5 +26,3 @@ class FacadeJS {
     this._transport.removeAllListeners();
   }
 }
-
-export { FacadeJS };

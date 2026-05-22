@@ -1,6 +1,5 @@
 import { EventEmitter } from "./event/emitter";
 import * as urlUtils from "./utils/url";
-import { XDRObject } from "./transport/sender/xdr";
 import { XHRCorsObject } from "./transport/sender/xhr-cors";
 import { XHRLocalObject } from "./transport/sender/xhr-local";
 import { XHRFake } from "./transport/sender/xhr-fake";
@@ -9,7 +8,7 @@ import { InfoAjax } from "./info-ajax";
 
 const debug = (...args: any[]) => console.log("[sockjs-client:info-receiver]", ...args);
 
-class InfoReceiver extends EventEmitter {
+export class InfoReceiver extends EventEmitter {
   static _getReceiver: (baseUrl: string, url: string, urlInfo: any) => any;
   static timeout: number = 8000;
   xo: any;
@@ -18,30 +17,27 @@ class InfoReceiver extends EventEmitter {
   constructor(baseUrl: string, urlInfo: any) {
     super();
     debug(baseUrl);
-    const self = this;
-
-    setTimeout(function () {
-      self.doXhr(baseUrl, urlInfo);
+    setTimeout(() => {
+      this.doXhr(baseUrl, urlInfo);
     }, 0);
   }
 
   doXhr(baseUrl: string, urlInfo: any): void {
-    const self = this;
     const url = urlUtils.addPath(baseUrl, "/info");
     debug("doXhr", url);
 
     this.xo = InfoReceiver._getReceiver(baseUrl, url, urlInfo);
 
-    this.timeoutRef = setTimeout(function () {
+    this.timeoutRef = setTimeout(() => {
       debug("timeout");
-      self._cleanup(false);
-      self.emit("finish");
+      this._cleanup(false);
+      this.emit("finish");
     }, InfoReceiver.timeout);
 
-    this.xo.once("finish", function (info: any, rtt: number, status: number) {
+    this.xo.once("finish", (info: any, rtt: number, status: number) => {
       debug("finish", info, rtt);
-      self._cleanup(true);
-      self.emit("finish", info, rtt, status);
+      this._cleanup(true);
+      this.emit("finish", info, rtt, status);
     });
   }
 
@@ -69,13 +65,8 @@ InfoReceiver._getReceiver = function (baseUrl: string, url: string, urlInfo: any
   if (XHRCorsObject.enabled) {
     return new InfoAjax(url, XHRCorsObject);
   }
-  if (XDRObject.enabled && urlInfo.sameScheme) {
-    return new InfoAjax(url, XDRObject);
-  }
   if (InfoIframe.enabled()) {
     return new InfoIframe(baseUrl, url);
   }
   return new InfoAjax(url, XHRFake);
 };
-
-export { InfoReceiver };

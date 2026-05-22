@@ -1,5 +1,6 @@
 {
-  "name": "sockts",
+  "name": "@eliasku/sockjs-client",
+  "version": "0.0.1",
   "module": "dist/sockjs.js",
   "types": "dist/sockjs.d.ts",
   "type": "module",
@@ -12,6 +13,7 @@
   "files": [
     "dist"
   ],
+  "license": "MIT",
   "scripts": {
     "typecheck": "tsc",
     "fix": "oxfmt && oxlint --fix",
@@ -27,5 +29,8 @@
     "oxlint": "^1.66.0",
     "rolldown": "^1.0.2",
     "typescript": "^6.0.3"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

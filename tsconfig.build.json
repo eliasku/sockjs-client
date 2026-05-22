@@ -10,6 +10,7 @@
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
     "verbatimModuleSyntax": false,
+    "useDefineForClassFields": false,
     "declaration": true,
     "emitDeclarationOnly": true,
     "declarationDir": "./dist",
@@ -25,5 +26,5 @@
     "noUnusedParameters": false,
     "noPropertyAccessFromIndexSignature": false
   },
-  "include": ["./src/**/*.ts"]
+  "include": ["./src/entry.ts"]
 }

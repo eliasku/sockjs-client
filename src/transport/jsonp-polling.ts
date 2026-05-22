@@ -2,7 +2,7 @@ import { SenderReceiver } from "./lib/sender-receiver";
 import { JsonpReceiver } from "./receiver/jsonp";
 import { jsonpSender } from "./sender/jsonp";
 
-class JsonPTransport extends SenderReceiver {
+export class JsonPTransport extends SenderReceiver {
   static enabled: any;
   static transportName: string = "jsonp-polling";
   static roundTrips: number = 1;
@@ -19,5 +19,3 @@ class JsonPTransport extends SenderReceiver {
 JsonPTransport.enabled = function (): boolean {
   return !!(globalThis as any).document;
 };
-
-export { JsonPTransport };

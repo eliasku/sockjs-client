@@ -1,4 +1,4 @@
-class Event {
+export class Event {
   type: string;
   bubbles: boolean = false;
   cancelable: boolean = false;
@@ -12,7 +12,7 @@ class Event {
     this.type = eventType;
     this.bubbles = canBubble;
     this.cancelable = cancelable;
-    this.timeStamp = +new Date();
+    this.timeStamp = Date.now();
     return this;
   }
 
@@ -23,5 +23,3 @@ class Event {
   static AT_TARGET = 2;
   static BUBBLING_PHASE = 3;
 }
-
-export { Event };

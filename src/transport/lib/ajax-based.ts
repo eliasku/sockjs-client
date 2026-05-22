@@ -35,10 +35,8 @@ function createAjaxSender(AjaxObject: any): AjaxSender {
   };
 }
 
-class AjaxBasedTransport extends SenderReceiver {
+export class AjaxBasedTransport extends SenderReceiver {
   constructor(transUrl: string, urlSuffix: string, Receiver: any, AjaxObject: any) {
     super(transUrl, urlSuffix, createAjaxSender(AjaxObject), Receiver, AjaxObject);
   }
 }
-
-export { AjaxBasedTransport };

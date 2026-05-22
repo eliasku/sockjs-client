@@ -1,11 +1,11 @@
 import { Event } from "./event";
 
-class CloseEvent extends Event {
+export class CloseEvent extends Event {
   wasClean: boolean;
   code: number;
   reason: string;
 
-  constructor(type?: string) {
+  constructor(_type?: string) {
     super("close");
     this.initEvent("close", false, false);
     this.wasClean = false;
@@ -13,5 +13,3 @@ class CloseEvent extends Event {
     this.reason = "";
   }
 }
-
-export { CloseEvent };

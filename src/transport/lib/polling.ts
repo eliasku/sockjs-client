@@ -2,7 +2,7 @@ import { EventEmitter } from "../../event/emitter";
 
 const debug = (...args: any[]) => console.log("[sockjs-client:polling]", ...args);
 
-class Polling extends EventEmitter {
+export class Polling extends EventEmitter {
   Receiver: any;
   receiveUrl: string;
   AjaxObject: any;
@@ -21,24 +21,23 @@ class Polling extends EventEmitter {
 
   _scheduleReceiver(): void {
     debug("_scheduleReceiver");
-    const self = this;
     let poll = (this.poll = new this.Receiver(this.receiveUrl, this.AjaxObject));
 
-    poll.on("message", function (msg: string) {
+    poll.on("message", (msg: string) => {
       debug("message", msg);
-      self.emit("message", msg);
+      this.emit("message", msg);
     });
 
-    poll.once("close", function (code: number, reason: string) {
-      debug("close", code, reason, self.pollIsClosing);
-      self.poll = poll = null;
+    poll.once("close", (code: number, reason: string) => {
+      debug("close", code, reason, this.pollIsClosing);
+      this.poll = poll = null;
 
-      if (!self.pollIsClosing) {
+      if (!this.pollIsClosing) {
         if (reason === "network") {
-          self._scheduleReceiver();
+          this._scheduleReceiver();
         } else {
-          self.emit("close", code || 1006, reason);
-          self.removeAllListeners();
+          this.emit("close", code || 1006, reason);
+          this.removeAllListeners();
         }
       }
     });
@@ -53,5 +52,3 @@ class Polling extends EventEmitter {
     }
   }
 }
-
-export { Polling };

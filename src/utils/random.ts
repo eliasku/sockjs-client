@@ -17,6 +17,6 @@ export function number(max: number): number {
 
 export function numberString(max: number): string {
   const t = ("" + (max - 1)).length;
-  const p = new Array(t + 1).join("0");
+  const p = "0".repeat(t);
   return (p + number(max)).slice(-t);
 }

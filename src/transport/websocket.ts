@@ -5,7 +5,7 @@ import { WebSocketBrowserDriver } from "./browser/websocket";
 
 const debug = (...args: any[]) => console.log("[sockjs-client:websocket]", ...args);
 
-class WebSocketTransport extends EventEmitter {
+export class WebSocketTransport extends EventEmitter {
   url: string;
   ws: any;
   unloadRef: any;
@@ -22,7 +22,6 @@ class WebSocketTransport extends EventEmitter {
 
     debug("constructor", transUrl);
 
-    const self = this;
     let url = urlUtils.addPath(transUrl, "/websocket");
     if (url.slice(0, 5) === "https") {
       url = `wss${url.slice(5)}`;
@@ -35,23 +34,23 @@ class WebSocketTransport extends EventEmitter {
     if (!this.ws) {
       throw new Error("WebSocket not available");
     }
-    this.ws.onmessage = function (e: any) {
+    this.ws.onmessage = (e: any) => {
       debug("message event", e.data);
-      self.emit("message", e.data);
+      this.emit("message", e.data);
     };
-    this.unloadRef = utils.unloadAdd(function () {
+    this.unloadRef = utils.unloadAdd(() => {
       debug("unload");
-      self.ws.close();
+      this.ws.close();
     });
-    this.ws.onclose = function (e: any) {
+    this.ws.onclose = (e: any) => {
       debug("close event", e.code, e.reason);
-      self.emit("close", e.code, e.reason);
-      self._cleanup();
+      this.emit("close", e.code, e.reason);
+      this._cleanup();
     };
-    this.ws.onerror = function (e: any) {
+    this.ws.onerror = (e: any) => {
       debug("error event", e);
-      self.emit("close", 1006, "WebSocket connection broken");
-      self._cleanup();
+      this.emit("close", 1006, "WebSocket connection broken");
+      this._cleanup();
     };
   }
 
@@ -86,5 +85,3 @@ WebSocketTransport.enabled = function (): boolean {
   debug("enabled");
   return !!WebSocketBrowserDriver;
 };
-
-export { WebSocketTransport };

@@ -7,7 +7,7 @@ interface TransportLike {
   roundTrips: number;
 }
 
-function createIframeWrapTransport(transport: TransportLike) {
+export function createIframeWrapTransport(transport: TransportLike) {
   class IframeWrapTransport extends IframeTransport {
     static enabled: any;
     static transportName: string;
@@ -38,5 +38,3 @@ function createIframeWrapTransport(transport: TransportLike) {
 
   return IframeWrapTransport;
 }
-
-export { createIframeWrapTransport };

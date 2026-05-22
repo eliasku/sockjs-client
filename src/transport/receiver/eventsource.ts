@@ -8,24 +8,23 @@ function decodeURISafe(s: string): string {
   return decodeURI(s.replace(/%(?![0-9][0-9a-fA-F]+)/g, "%25"));
 }
 
-class EventSourceReceiver extends EventEmitter {
+export class EventSourceReceiver extends EventEmitter {
   es: any;
 
   constructor(url: string) {
     super();
     debug(url);
 
-    const self = this;
     const es = (this.es = new EventSourceBrowserDriver(url));
-    es.onmessage = function (e: any) {
+    es.onmessage = (e: any) => {
       debug("message", e.data);
-      self.emit("message", decodeURISafe(e.data));
+      this.emit("message", decodeURISafe(e.data));
     };
-    es.onerror = function (e: any) {
+    es.onerror = (e: any) => {
       debug("error", es.readyState, e);
       const reason = es.readyState !== 2 ? "network" : "permanent";
-      self._cleanup();
-      self._close(reason);
+      this._cleanup();
+      this._close(reason);
     };
   }
 
@@ -47,12 +46,9 @@ class EventSourceReceiver extends EventEmitter {
 
   _close(reason: string): void {
     debug("close", reason);
-    const self = this;
-    setTimeout(function () {
-      self.emit("close", null, reason);
-      self.removeAllListeners();
+    setTimeout(() => {
+      this.emit("close", null, reason);
+      this.removeAllListeners();
     }, 200);
   }
 }
-
-export { EventSourceReceiver };

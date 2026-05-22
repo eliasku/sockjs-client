@@ -1,5 +1,5 @@
 import { describe, it, expect } from "bun:test";
-import { string, number, numberString } from "../src/utils/random";
+import { string, numberString } from "../src/utils/random";
 import { getOrigin, isOriginEqual, isSchemeEqual, addPath, addQuery, isLoopbackAddr } from "../src/utils/url";
 import { quote } from "../src/utils/escape";
 import { extend, isObject } from "../src/utils/object";

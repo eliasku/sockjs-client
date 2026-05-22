@@ -22,7 +22,15 @@
     "typescript/consistent-type-imports": "error",
     "typescript/no-empty-object-type": "off",
     "eslint/no-useless-constructor": "off",
-    "unicorn/prefer-add-event-listener": "off"
+    "unicorn/prefer-add-event-listener": "off",
+    "unicorn/require-post-message-target-origin": "off",
+    "no-misleading-character-class": [
+      "error",
+      {
+        "allowEscape": true
+      }
+    ],
+    "no-control-regex": "off"
   },
   "ignorePatterns": [
     "*.gen.ts",

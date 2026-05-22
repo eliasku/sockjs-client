@@ -8,13 +8,9 @@ let area: HTMLTextAreaElement | null = null;
 
 function createIframe(id: string): HTMLIFrameElement {
   debug("createIframe", id);
-  try {
-    return (globalThis as any).document.createElement(`<iframe name="${id}">`);
-  } catch {
-    const iframe = (globalThis as any).document.createElement("iframe");
-    iframe.name = id;
-    return iframe;
-  }
+  const iframe = (globalThis as any).document.createElement("iframe");
+  iframe.name = id;
+  return iframe;
 }
 
 function createForm(): void {
@@ -33,7 +29,7 @@ function createForm(): void {
   (globalThis as any).document.body.appendChild(form!);
 }
 
-const jsonpSender = function (url: string, payload: string, callback: (err?: Error) => void): () => void {
+export const jsonpSender = function (url: string, payload: string, callback: (err?: Error) => void): () => void {
   debug(url, payload);
   if (!form) {
     createForm();
@@ -59,7 +55,7 @@ const jsonpSender = function (url: string, payload: string, callback: (err?: Err
     if (!(iframe as any).onerror) {
       return;
     }
-    (iframe as any).onreadystatechange = (iframe as any).onerror = (iframe as any).onload = null;
+    (iframe as any).onerror = (iframe as any).onload = null;
     setTimeout(function () {
       debug("cleaning up", id);
       iframe.parentNode!.removeChild(iframe);
@@ -75,16 +71,8 @@ const jsonpSender = function (url: string, payload: string, callback: (err?: Err
     debug("onload", id);
     completed();
   };
-  (iframe as any).onreadystatechange = function (e: any) {
-    debug("onreadystatechange", id, (iframe as any).readyState, e);
-    if ((iframe as any).readyState === "complete") {
-      completed();
-    }
-  };
   return function () {
     debug("aborted", id);
     completed(new Error("Aborted"));
   };
 };
-
-export { jsonpSender };

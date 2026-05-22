@@ -1,6 +1,6 @@
 import { Event } from "./event";
 
-class TransportMessageEvent extends Event {
+export class TransportMessageEvent extends Event {
   data: any;
 
   constructor(data: any) {
@@ -9,5 +9,3 @@ class TransportMessageEvent extends Event {
     this.data = data;
   }
 }
-
-export { TransportMessageEvent };

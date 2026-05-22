@@ -3,24 +3,23 @@ import * as objectUtils from "./utils/object";
 
 const debug = (...args: any[]) => console.log("[sockjs-client:info-ajax]", ...args);
 
-class InfoAjax extends EventEmitter {
+export class InfoAjax extends EventEmitter {
   xo: any;
 
   constructor(url: string, AjaxObject: any) {
     super();
-    const self = this;
-    const t0 = +new Date();
+    const t0 = Date.now();
     this.xo = new AjaxObject("GET", url);
 
-    this.xo.once("finish", function (status: number, text: string) {
+    this.xo.once("finish", (status: number, text: string) => {
       let info: any;
       let rtt: number | undefined;
       if (status === 200) {
-        rtt = +new Date() - t0;
+        rtt = Date.now() - t0;
         if (text) {
           try {
             info = JSON.parse(text);
-          } catch (e) {
+          } catch {
             debug("bad json", text);
           }
         }
@@ -29,8 +28,8 @@ class InfoAjax extends EventEmitter {
           info = {};
         }
       }
-      self.emit("finish", info, rtt, status);
-      self.removeAllListeners();
+      this.emit("finish", info, rtt, status);
+      this.removeAllListeners();
     });
   }
 
@@ -39,5 +38,3 @@ class InfoAjax extends EventEmitter {
     this.xo.close();
   }
 }
-
-export { InfoAjax };

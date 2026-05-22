@@ -3,7 +3,7 @@ import { XhrReceiver } from "./receiver/xhr";
 import { XHRCorsObject } from "./sender/xhr-cors";
 import { XHRLocalObject } from "./sender/xhr-local";
 
-class XhrPollingTransport extends AjaxBasedTransport {
+export class XhrPollingTransport extends AjaxBasedTransport {
   static enabled: any;
   static transportName: string = "xhr-polling";
   static roundTrips: number = 2;
@@ -26,5 +26,3 @@ XhrPollingTransport.enabled = function (info: any): boolean {
   }
   return XHRCorsObject.enabled;
 };
-
-export { XhrPollingTransport };

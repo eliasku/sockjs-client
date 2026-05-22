@@ -16,13 +16,13 @@ describe("SockJS", () => {
     describe("WebSocket specification step #1", () => {
       it("should throw TypeError for no arguments", () => {
         expect(() => {
-          new (SockJS as any)();
+          const _sockjs = new (SockJS as any)();
         }).toThrow();
       });
 
       it("should throw SyntaxError when the url contains a fragment", () => {
         expect(() => {
-          new SockJS("http://localhost/#test");
+          const _sockjs = new SockJS("http://localhost/#test");
         }).toThrow();
       });
     });

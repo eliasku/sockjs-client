@@ -18,7 +18,7 @@ const debug = (...args: any[]) => console.log("[sockjs-client:main]", ...args);
 
 let transports: any;
 
-class SockJS extends EventTarget {
+export class SockJS extends EventTarget {
   static CONNECTING = 0;
   static OPEN = 1;
   static CLOSING = 2;
@@ -50,13 +50,6 @@ class SockJS extends EventTarget {
   constructor(url: string, protocols?: string | string[], options?: any) {
     super();
 
-    if (!(this instanceof SockJS)) {
-      return new SockJS(url, protocols, options);
-    }
-    if (arguments.length < 1) {
-      throw new TypeError("Failed to construct 'SockJS: 1 argument required, but only 0 present");
-    }
-
     this.readyState = SockJS.CONNECTING;
     this.extensions = "";
     this.protocol = "";
@@ -64,11 +57,7 @@ class SockJS extends EventTarget {
     this.onclose = null;
     this.onerror = null;
 
-    // non-standard extension
     options = options || {};
-    if (options.protocols_whitelist) {
-      console.warn("'protocols_whitelist' is DEPRECATED. Use 'transports' instead.");
-    }
     this._transportsWhitelist = options.transports;
     this._transportOptions = options.transportOptions || {};
     this._timeout = options.timeout || 0;
