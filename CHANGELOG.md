@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.0.3
+
+- fix missing `onopen`
+
 ## 0.0.2
 
 - fix `main.d.ts` export
