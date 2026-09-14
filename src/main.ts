@@ -104,12 +104,12 @@ export class SockJS extends EventTarget {
     }
 
     // Step 5 - check protocols argument
-    const sortedProtocols = protocols.toSorted();
-    sortedProtocols.forEach(function (proto: string, i: number) {
+    protocols.sort();
+    protocols.forEach(function (proto: string, i: number) {
       if (!proto) {
         throw new SyntaxError(`The protocols entry '${proto}' is invalid.`);
       }
-      if (i < sortedProtocols.length - 1 && proto === sortedProtocols[i + 1]) {
+      if (i < protocols.length - 1 && proto === protocols[i + 1]) {
         throw new SyntaxError(`The protocols entry '${proto}' is duplicated.`);
       }
     });

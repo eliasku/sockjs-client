@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.0.5
+
+- remove `toSorted` usage
+
 ## 0.0.4
 
 - fix compat with `IStompSocket`
