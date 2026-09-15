@@ -5,7 +5,9 @@ const prodBuild = true;
 export default defineConfig({
   input: "src/entry.ts",
   output: {
-    file: "dist/sockjs.js",
+    dir: "dist",
+    entryFileNames: "sockjs.js",
+    sourcemap: true,
     format: "esm",
     minify: {
       mangle: {
