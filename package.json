@@ -1,6 +1,6 @@
 {
   "name": "@eliasku/sockjs-client",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "module": "dist/sockjs.js",
   "types": "dist/entry.d.ts",
   "type": "module",
