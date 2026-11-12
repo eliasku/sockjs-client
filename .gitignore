@@ -1,4 +1,4 @@
 node_modules
-.meta/
 dist
 .DS_Store
+.vitest/

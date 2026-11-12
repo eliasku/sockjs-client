@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.0.6
 
 - Split TypeScript configuration into shared, Vitest, Node.js and browser projects under `scripts/`.
 - Use `tsc -b` for type checking, cache build metadata in `node_modules/.cache/` and select the browser config for bundling.
