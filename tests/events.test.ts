@@ -1,4 +1,4 @@
-import { describe, it, expect } from "vite-plus/test";
+import { describe, it, expect, vi } from "vite-plus/test";
 import { string, numberString } from "../src/utils/random";
 import { getOrigin, isOriginEqual, isSchemeEqual, addPath, addQuery, isLoopbackAddr } from "../src/utils/url";
 import { quote } from "../src/utils/escape";
@@ -153,6 +153,30 @@ describe("Event system", () => {
       expect(count).toBe(1);
     });
 
+    it("should isolate inherited listeners through once and removal", () => {
+      const first = new EventEmitter();
+      const second = new EventEmitter();
+      const received: string[] = [];
+      first.once("message", function (this: EventEmitter, data: string) {
+        expect(this).toBe(first);
+        received.push(`first:${data}`);
+      });
+      const listener = function (this: EventEmitter, data: string) {
+        expect(this).toBe(second);
+        received.push(`second:${data}`);
+      };
+      second.on("message", listener);
+
+      first.emit("message", "one");
+      first.emit("message", "ignored");
+      first.removeAllListeners();
+      second.emit("message", "two");
+      second.removeListener("message", listener);
+      second.emit("message", "ignored");
+
+      expect(received).toEqual(["first:one", "second:two"]);
+    });
+
     it("should removeAllListeners", () => {
       const emitter = new EventEmitter();
       let count = 0;
@@ -208,6 +232,38 @@ describe("Event system", () => {
     it("should have correct type", () => {
       const e = new Event("open");
       expect(e.type).toBe("open");
+    });
+
+    it("should preserve derived metadata and payloads through dispatch", () => {
+      const clock = vi.spyOn(Date, "now").mockReturnValue(123456789);
+      try {
+        const target = new EventTarget();
+        const received: Event[] = [];
+        const payload = { text: "hello" };
+        const message = new TransportMessageEvent(payload);
+        const close = new CloseEvent();
+        close.code = 3001;
+        close.reason = "finished";
+        close.wasClean = true;
+        target.addEventListener("message", (event: TransportMessageEvent) => received.push(event));
+        target.addEventListener("close", (event: CloseEvent) => received.push(event));
+
+        target.dispatchEvent(message);
+        target.dispatchEvent(close);
+
+        expect(received).toEqual([message, close]);
+        expect(received[0]).toMatchObject({ type: "message", timeStamp: 123456789, data: payload });
+        expect(message.data).toBe(payload);
+        expect(received[1]).toMatchObject({
+          type: "close",
+          timeStamp: 123456789,
+          code: 3001,
+          reason: "finished",
+          wasClean: true,
+        });
+      } finally {
+        clock.mockRestore();
+      }
     });
   });
 });

@@ -1,0 +1,10 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "lib": ["ESNext", "DOM"],
+    "types": [],
+    "tsBuildInfoFile": "../node_modules/.cache/tsconfig.lib.tsbuildinfo"
+  },
+  "include": ["../src/**/*.ts", "../examples/**/*.ts"],
+  "exclude": ["../**/*.test.ts"]
+}

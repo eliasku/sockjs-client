@@ -91,3 +91,12 @@ Vitest runs in jsdom because the client uses browser event and transport APIs.
 ```bash
 npm run typecheck
 ```
+
+`npm run typecheck` runs `tsc -b` through the root solution config, which only lists project references.
+Shared options are in `scripts/tsconfig.base.json`; the specialized configs are:
+
+- `scripts/tsconfig.test.json` — Vitest `*.test.ts` files.
+- `scripts/tsconfig.node.json` — root-level TypeScript configs and Node.js scripts in `scripts/`.
+- `scripts/tsconfig.lib.json` — browser library sources and examples; also used by the bundler.
+
+TypeScript build metadata is stored in `node_modules/.cache/`.

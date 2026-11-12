@@ -15,7 +15,7 @@
   ],
   "license": "MIT",
   "scripts": {
-    "typecheck": "tsc",
+    "typecheck": "tsc -b",
     "fix": "vp fmt && vp lint --fix",
     "lint": "vp lint",
     "lint:fix": "vp lint --fix",

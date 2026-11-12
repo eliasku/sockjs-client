@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+- Split TypeScript configuration into shared, Vitest, Node.js and browser projects under `scripts/`.
+- Use `tsc -b` for type checking, cache build metadata in `node_modules/.cache/` and select the browser config for bundling.
+- Enable standard ECMAScript class-field semantics in the TypeScript configuration.
+- Add regressions for inherited event metadata, isolated listeners and SockJS close callbacks.
+
 - Migrate build, tests, lint and formatting to Vite+ 1.5.0 and npm 12.2.2.
 - Run Vitest in jsdom and preserve the published ESM and declaration entry paths.
 

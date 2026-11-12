@@ -1,0 +1,9 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "lib": ["ESNext", "DOM"],
+    "types": ["node", "vite-plus/test"],
+    "tsBuildInfoFile": "../node_modules/.cache/tsconfig.test.tsbuildinfo"
+  },
+  "include": ["../**/*.test.ts", "../src/global.d.ts"]
+}
