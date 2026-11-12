@@ -16,20 +16,33 @@
   "license": "MIT",
   "scripts": {
     "typecheck": "tsc",
-    "fix": "oxfmt && oxlint --fix",
-    "lint": "oxlint",
-    "lint:fix": "oxlint --fix",
-    "format": "oxfmt",
-    "format:check": "oxfmt --check",
-    "build": "rolldown -c rolldown.config.ts && tsc -p tsconfig.build.json",
+    "fix": "vp fmt && vp lint --fix",
+    "lint": "vp lint",
+    "lint:fix": "vp lint --fix",
+    "format": "vp fmt",
+    "format:check": "vp fmt --check",
+    "test": "vp test",
+    "build": "vp pack",
+    "check": "vp check && npm run typecheck",
+    "verify": "npm run check && npm test && npm run build",
     "prepack": "npm run build"
   },
   "devDependencies": {
-    "@types/bun": "^1.4.2",
-    "oxfmt": "^0.51.0",
-    "oxlint": "^1.83.0",
-    "rolldown": "^1.2.8",
-    "typescript": "^6.0.3"
+    "@types/node": "^26.6.6",
+    "jsdom": "^31.0.0",
+    "typescript": "^6.0.3",
+    "vite": "npm:@voidzero-dev/vite-plus-core@1.5.0",
+    "vite-plus": "1.5.0"
+  },
+  "overrides": {
+    "vite": "npm:@voidzero-dev/vite-plus-core@1.5.0"
+  },
+  "packageManager": "npm@12.2.2",
+  "engines": {
+    "node": "^22.22.2 || ^24.15.0 || >=26.0.0"
+  },
+  "allowScripts": {
+    "esbuild": true
   },
   "publishConfig": {
     "access": "public"

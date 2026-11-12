@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+- Migrate build, tests, lint and formatting to Vite+ 1.5.0 and npm 12.2.2.
+- Run Vitest in jsdom and preserve the published ESM and declaration entry paths.
+
 ## 0.0.5
 
 - remove `toSorted` usage

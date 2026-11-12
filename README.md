@@ -59,22 +59,35 @@ The original `sockjs-client` was designed around 2011-era constraints: IE6/7/8 s
 - `inherits` — native `class extends`
 - `url-parse` — native `URL` constructor
 
+### Development
+
+Requires Node.js `^22.22.2 || ^24.15.0 || >=26.0.0` and npm 12.2.2. Vite+ is pinned to 1.5.0.
+
+```bash
+npm ci
+npm run verify
+```
+
+Build, test, lint and formatting settings are in `vite.config.ts`. A global Vite+ installation is not required.
+
 ### Building
 
 ```bash
-bun run build
+npm run build
 ```
 
-Outputs ESM bundle to `dist/sockjs.js` with TypeScript declarations via rolldown + `tsc`.
+Outputs the ESM bundle to `dist/sockjs.js` and bundled TypeScript declarations to `dist/entry.d.ts` through Vite+.
 
 ### Testing
 
 ```bash
-bun test
+npm test
 ```
+
+Vitest runs in jsdom because the client uses browser event and transport APIs.
 
 ### Type checking
 
 ```bash
-bun run typecheck
+npm run typecheck
 ```

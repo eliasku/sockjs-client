@@ -1,4 +1,4 @@
-import { describe, it, expect } from "bun:test";
+import { describe, it, expect } from "vite-plus/test";
 import { string, numberString } from "../src/utils/random";
 import { getOrigin, isOriginEqual, isSchemeEqual, addPath, addQuery, isLoopbackAddr } from "../src/utils/url";
 import { quote } from "../src/utils/escape";

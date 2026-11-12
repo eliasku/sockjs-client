@@ -1,4 +1,4 @@
-import { describe, it, expect } from "bun:test";
+import { describe, it, expect } from "vite-plus/test";
 import * as random from "../src/utils/random";
 import * as urlUtils from "../src/utils/url";
 import * as escape from "../src/utils/escape";

@@ -1,4 +1,4 @@
-import { describe, it, expect } from "bun:test";
+import { describe, it, expect } from "vite-plus/test";
 import { SockJS } from "../src/entry";
 import { transportList } from "../src/transport-list";
 
