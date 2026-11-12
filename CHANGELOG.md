@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.0.8 (unreleased)
+
+-
+
 ## 0.0.7
 
 - Split TypeScript configuration into shared, Vitest, Node.js and browser projects under `scripts/`.
