@@ -61,7 +61,7 @@ The original `sockjs-client` was designed around 2011-era constraints: IE6/7/8 s
 
 ### Development
 
-Requires Node.js `^22.22.2 || ^24.15.0 || >=26.0.0` and npm 12.2.2. Vite+ is pinned to 1.5.0.
+Requires Node.js `^22.22.2 || ^24.15.0 || >=26.0.0` and npm 12.2.2. Vite+ is pinned to 1.7.0.
 
 ```bash
 npm ci
