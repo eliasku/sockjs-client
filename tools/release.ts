@@ -2,13 +2,13 @@ import assert from "node:assert/strict";
 import { execFileSync } from "node:child_process";
 import { readFileSync, writeFileSync } from "node:fs";
 
-const files = ["package.json", "package-lock.json", "CHANGELOG.md"];
-const git = (...args) => execFileSync("git", args, { encoding: "utf8" }).trim();
-const run = (command, ...args) => execFileSync(command, args, { stdio: "inherit" });
+const files = ["package.json", "package-lock.json", "CHANGELOG.md"] as const;
+const git = (...args: string[]) => execFileSync("git", args, { encoding: "utf8" }).trim();
+const run = (command: string, ...args: string[]) => execFileSync(command, args, { stdio: "inherit" });
 
 function readVersion() {
-  const { version } = JSON.parse(readFileSync(files[0], "utf8"));
-  const lock = JSON.parse(readFileSync(files[1], "utf8"));
+  const { version } = JSON.parse(readFileSync(files[0], "utf8")) as { version: string };
+  const lock = JSON.parse(readFileSync(files[1], "utf8")) as { version: string; packages: { "": { version: string } } };
   assert.match(version, /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)$/, "A stable package version is required");
   assert.equal(lock.version, version, "Update package-lock.json before releasing");
   assert.equal(lock.packages[""].version, version, "Update the root lock version before releasing");

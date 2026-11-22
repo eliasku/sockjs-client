@@ -29,12 +29,13 @@
     "build": "vp pack",
     "check": "vp check && npm run typecheck",
     "verify": "npm run check && npm test && npm run build",
-    "release": "node scripts/release.mjs",
+    "release": "tsx tools/release.ts",
     "prepack": "npm run build"
   },
   "devDependencies": {
     "@types/node": "^26.6.6",
     "happy-dom": "^21.0.4",
+    "tsx": "^4.23.15",
     "typescript": "^6.0.3",
     "vite": "npm:@voidzero-dev/vite-plus-core@8.3.8000",
     "vite-plus": "1.7.0"

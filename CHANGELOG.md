@@ -4,6 +4,7 @@
 
 - Closing a SockJS connection before startup no longer sends an `/info` request.
 - Run Vitest in Happy DOM instead of jsdom and use Vite+ 1.7.0.
+- Move development tooling to `tools/` and run the TypeScript release script with `tsx`.
 
 ## 0.0.7
 

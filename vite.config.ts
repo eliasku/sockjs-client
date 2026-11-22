@@ -7,11 +7,11 @@ const define = {
 
 export default defineConfig({
   define,
-  tsconfig: "./scripts/tsconfig.lib.json",
+  tsconfig: "./tools/tsconfig.lib.json",
   pack: [
     {
       entry: { sockjs: "src/entry.ts" },
-      tsconfig: "./scripts/tsconfig.lib.json",
+      tsconfig: "./tools/tsconfig.lib.json",
       dts: false,
       fixedExtension: false,
       target: "es2022",
@@ -24,7 +24,7 @@ export default defineConfig({
     },
     {
       entry: "src/entry.ts",
-      tsconfig: "./scripts/tsconfig.lib.json",
+      tsconfig: "./tools/tsconfig.lib.json",
       fixedExtension: false,
       dts: { emitDtsOnly: true },
     },
