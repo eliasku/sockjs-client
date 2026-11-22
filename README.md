@@ -100,3 +100,12 @@ Shared options are in `scripts/tsconfig.base.json`; the specialized configs are:
 - `scripts/tsconfig.lib.json` — browser library sources and examples; also used by the bundler.
 
 TypeScript build metadata is stored in `node_modules/.cache/`.
+
+### Releases
+
+Push the release notes on the default branch and run `npm run release` from a clean checkout.
+It pushes the annotated `v<version>` tag, then updates the changelog and both npm manifests in a local `next version` patch commit. Push that commit separately.
+
+Before the first tag, create the GitHub environment `npm` and allow only deployment tags matching `v*`. Restrict who can create or move release tags.
+In [npm Trusted Publishing](https://docs.npmjs.com/trusted-publishers/), authorize `eliasku/sockjs-client`, workflow file `publish.yml`, environment `npm`, with direct `npm publish` allowed. No npm write token is needed.
+The tag workflow type-checks, tests, and builds before publishing the packed artifact. If publishing fails due to configuration, fix it and rerun the tagged workflow rather than moving the tag.
