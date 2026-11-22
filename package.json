@@ -4,6 +4,10 @@
   "module": "dist/sockjs.js",
   "types": "dist/entry.d.ts",
   "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eliasku/sockjs-client.git"
+  },
   "exports": {
     ".": {
       "types": "./dist/entry.d.ts",
