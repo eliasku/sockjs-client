@@ -31,7 +31,7 @@ export default defineConfig({
   ],
   test: {
     include: ["tests/**/*.test.ts"],
-    environment: "jsdom",
+    environment: "happy-dom",
   },
   lint: {
     plugins: ["typescript", "unicorn", "oxc"],

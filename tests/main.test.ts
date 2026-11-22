@@ -42,6 +42,22 @@ describe("SockJS", () => {
     });
   });
 
+  it("does not send an info request after closing before startup", () => {
+    vi.useFakeTimers();
+    const send = vi.spyOn(XMLHttpRequest.prototype, "send").mockImplementation(() => {});
+    try {
+      const socket = new SockJS(`${location.origin}/sockjs`);
+      socket.close();
+      vi.runAllTimers();
+
+      expect(socket.readyState).toBe(SockJS.CLOSED);
+      expect(send).not.toHaveBeenCalled();
+    } finally {
+      send.mockRestore();
+      vi.useRealTimers();
+    }
+  });
+
   it("should close connections with independent callbacks and inherited listeners", () => {
     vi.useFakeTimers();
     try {

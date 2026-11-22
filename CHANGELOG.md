@@ -2,7 +2,8 @@
 
 ## 0.0.8 (unreleased)
 
--
+- Closing a SockJS connection before startup no longer sends an `/info` request.
+- Run Vitest in Happy DOM instead of jsdom and use Vite+ 1.7.0.
 
 ## 0.0.7
 

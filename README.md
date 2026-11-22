@@ -84,7 +84,7 @@ Outputs the ESM bundle to `dist/sockjs.js` and bundled TypeScript declarations t
 npm test
 ```
 
-Vitest runs in jsdom because the client uses browser event and transport APIs.
+Vitest runs in Happy DOM to provide browser APIs for unit tests. Verify transport fallback separately in a real browser.
 
 ### Type checking
 

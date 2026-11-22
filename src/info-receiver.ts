@@ -17,7 +17,7 @@ export class InfoReceiver extends EventEmitter {
   constructor(baseUrl: string, urlInfo: any) {
     super();
     debug(baseUrl);
-    setTimeout(() => {
+    this.timeoutRef = setTimeout(() => {
       this.doXhr(baseUrl, urlInfo);
     }, 0);
   }
