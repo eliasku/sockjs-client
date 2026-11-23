@@ -2,7 +2,7 @@
 
 ## 0.0.9
 
-- Use TypeScript 7 for type checking, declaration builds and native editor LSP support.
+- Use TypeScript 7 for type checking and native editor LSP support; generate bundled declarations with Oxc.
 
 ## 0.0.8
 

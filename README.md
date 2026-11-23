@@ -76,7 +76,7 @@ Build, test, lint and formatting settings are in `vite.config.ts`. A global Vite
 npm run build
 ```
 
-Outputs the ESM bundle to `dist/sockjs.js` and bundled TypeScript declarations to `dist/entry.d.ts` through Vite+.
+Vite+ uses `tools/tsconfig.lib.json` to build `dist/sockjs.js` and the Oxc-generated declaration bundle `dist/entry.d.ts`.
 
 ### Testing
 

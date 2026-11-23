@@ -24,10 +24,9 @@ export default defineConfig({
     },
     {
       entry: "src/entry.ts",
-      // shortcut: native dts emit uses the config directory; reuse the lib config once it honors rootDir.
-      tsconfig: "./tsconfig.dts.json",
+      tsconfig: "./tools/tsconfig.lib.json",
       fixedExtension: false,
-      dts: { emitDtsOnly: true },
+      dts: { emitDtsOnly: true, generator: "oxc" },
     },
   ],
   test: {
