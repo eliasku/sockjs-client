@@ -396,7 +396,9 @@ function userSetCode(code: number): boolean {
 
 import { bootstrap_iframe } from "./iframe-bootstrap";
 
-export function createSockJS(availableTransports: any[]): typeof SockJS {
+export type SockJSClass = typeof SockJS;
+
+export function createSockJS(availableTransports: any[]): SockJSClass {
   transports = createTransportUtils(availableTransports);
   bootstrap_iframe(SockJS, availableTransports);
   return SockJS;
