@@ -1,5 +1,7 @@
 # Changelog
 
+## 0.0.9
+
 ## 0.0.8
 
 - Closing a SockJS connection before startup no longer sends an `/info` request.
