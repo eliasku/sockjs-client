@@ -2,6 +2,8 @@
 
 ## 0.0.9
 
+- Use TypeScript 7 for type checking, declaration builds and native editor LSP support.
+
 ## 0.0.8
 
 - Closing a SockJS connection before startup no longer sends an `/info` request.

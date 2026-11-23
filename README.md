@@ -92,7 +92,7 @@ Vitest runs in Happy DOM to provide browser APIs for unit tests. Verify transpor
 npm run typecheck
 ```
 
-`npm run typecheck` runs `tsc -b` through the root solution config, which only lists project references.
+`npm run typecheck` uses native TypeScript 7 (`tsc -b`) through the root solution config, which only lists project references.
 Shared options are in `tools/tsconfig.base.json`; the specialized configs are:
 
 - `tools/tsconfig.test.json` — Vitest `*.test.ts` files.
