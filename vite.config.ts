@@ -85,6 +85,6 @@ export default defineConfig({
     arrowParens: "avoid",
     endOfLine: "lf",
     sortPackageJson: false,
-    ignorePatterns: ["*.js", "*.gen.ts", "dist", "out", "node_modules", "playwright-report", "package-lock.json"],
+    ignorePatterns: ["*.js", "*.gen.ts", "dist", "out", "node_modules", "playwright-report", "pnpm-lock.yaml"],
   },
 });

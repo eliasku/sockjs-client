@@ -1,0 +1,6 @@
+nodeLinker: hoisted
+overrides:
+  vite: npm:@voidzero-dev/vite-plus-core@8.3.8000
+allowBuilds:
+  esbuild: true
+  fsevents: true

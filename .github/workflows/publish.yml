@@ -21,6 +21,7 @@ jobs:
         with:
           node-version: 26
           package-manager-cache: false
+      - uses: pnpm/action-setup@73e46992e05b19abd31f2f3c20e0e7370d762115 # v6.1.1
       - name: Check release tag
         env:
           DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
@@ -33,15 +34,13 @@ jobs:
           assert.match(version, /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)$/);
           assert.equal(process.env.GITHUB_REF_NAME, `v${version}`, "Tag must match package.json");
           NODE
-      - run: npm install --global npm@12.2.2 --ignore-scripts
       - name: Build and pack
         run: |
-          npm ci
-          npm run typecheck
-          npm test -- --run
-          npm run build
-          archive=$(npm pack --ignore-scripts --loglevel=warn --pack-destination "$RUNNER_TEMP")
-          mv -- "$RUNNER_TEMP/$archive" "$RUNNER_TEMP/package.tgz"
+          pnpm install --frozen-lockfile
+          pnpm run typecheck
+          pnpm test --run
+          pnpm run build
+          pnpm pack --ignore-scripts --out "$RUNNER_TEMP/package.tgz"
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
         with:
           name: npm-package
@@ -60,10 +59,12 @@ jobs:
           node-version: 26
           registry-url: https://registry.npmjs.org
           package-manager-cache: false
-      - run: npm install --global npm@12.2.2 --ignore-scripts
+      - uses: pnpm/action-setup@73e46992e05b19abd31f2f3c20e0e7370d762115 # v6.1.1
+        with:
+          version: 12.23.0
       - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
         with:
           name: npm-package
           path: ${{ runner.temp }}/npm-package
           digest-mismatch: error
-      - run: npm publish "$RUNNER_TEMP/npm-package/package.tgz" --ignore-scripts --registry=https://registry.npmjs.org
+      - run: pnpm publish "$RUNNER_TEMP/npm-package/package.tgz" --ignore-scripts --no-git-checks --registry=https://registry.npmjs.org --access public

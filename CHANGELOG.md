@@ -3,6 +3,7 @@
 ## 0.0.9
 
 - Use TypeScript 7 for type checking and native editor LSP support; generate bundled declarations with Oxc.
+- Use pnpm for development and trusted publishing.
 
 ## 0.0.8
 

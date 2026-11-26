@@ -61,11 +61,11 @@ The original `sockjs-client` was designed around 2011-era constraints: IE6/7/8 s
 
 ### Development
 
-Requires Node.js `^22.22.2 || ^24.15.0 || >=26.0.0` and npm 12.2.2. Vite+ is pinned to 1.7.0.
+Requires Node.js `^22.22.2 || ^24.15.0 || >=26.0.0` and pnpm 12.23.0. Vite+ is pinned to 1.7.0.
 
 ```bash
-npm ci
-npm run verify
+pnpm install --frozen-lockfile
+pnpm run verify
 ```
 
 Build, test, lint and formatting settings are in `vite.config.ts`. A global Vite+ installation is not required.
@@ -73,7 +73,7 @@ Build, test, lint and formatting settings are in `vite.config.ts`. A global Vite
 ### Building
 
 ```bash
-npm run build
+pnpm run build
 ```
 
 Vite+ uses `tools/tsconfig.lib.json` to build `dist/sockjs.js` and the Oxc-generated declaration bundle `dist/entry.d.ts`.
@@ -81,7 +81,7 @@ Vite+ uses `tools/tsconfig.lib.json` to build `dist/sockjs.js` and the Oxc-gener
 ### Testing
 
 ```bash
-npm test
+pnpm test
 ```
 
 Vitest runs in Happy DOM to provide browser APIs for unit tests. Verify transport fallback separately in a real browser.
@@ -89,10 +89,10 @@ Vitest runs in Happy DOM to provide browser APIs for unit tests. Verify transpor
 ### Type checking
 
 ```bash
-npm run typecheck
+pnpm run typecheck
 ```
 
-`npm run typecheck` uses native TypeScript 7 (`tsc -b`) through the root solution config, which only lists project references.
+`pnpm run typecheck` uses native TypeScript 7 (`tsc -b`) through the root solution config, which only lists project references.
 Shared options are in `tools/tsconfig.base.json`; the specialized configs are:
 
 - `tools/tsconfig.test.json` — Vitest `*.test.ts` files.
@@ -103,8 +103,8 @@ TypeScript build metadata is stored in `node_modules/.cache/`.
 
 ### Releases
 
-Push the release notes on the default branch and run `npm run release` from a clean checkout.
-It pushes the annotated `v<version>` tag, then updates the changelog and both npm manifests in a local `next version` patch commit. Push that commit separately.
+Push the release notes on the default branch and run `pnpm run release` from a clean checkout.
+It pushes the annotated `v<version>` tag, then updates `package.json` and `CHANGELOG.md` in a local `next version` patch commit. Push that commit separately.
 
 Before the first tag, create the GitHub environment `npm` and allow only deployment tags matching `v*`. Restrict who can create or move release tags.
 In [npm Trusted Publishing](https://docs.npmjs.com/trusted-publishers/), authorize `eliasku/sockjs-client`, workflow file `publish.yml`, environment `npm`, with direct `npm publish` allowed. No npm write token is needed.

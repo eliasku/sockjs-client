@@ -2,26 +2,22 @@ import assert from "node:assert/strict";
 import { execFileSync } from "node:child_process";
 import { readFileSync, writeFileSync } from "node:fs";
 
-const files = ["package.json", "package-lock.json", "CHANGELOG.md"] as const;
+const files = ["package.json", "CHANGELOG.md"] as const;
 const git = (...args: string[]) => execFileSync("git", args, { encoding: "utf8" }).trim();
 const run = (command: string, ...args: string[]) => execFileSync(command, args, { stdio: "inherit" });
 
 function readVersion() {
   const { version } = JSON.parse(readFileSync(files[0], "utf8")) as { version: string };
-  const lock = JSON.parse(readFileSync(files[1], "utf8")) as { version: string; packages: { "": { version: string } } };
   assert.match(version, /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)$/, "A stable package version is required");
-  assert.equal(lock.version, version, "Update package-lock.json before releasing");
-  assert.equal(lock.packages[""].version, version, "Update the root lock version before releasing");
   return version;
 }
 
-const npm = process.env.npm_execpath;
-assert(npm && process.argv.length === 2, "Usage: npm run release (pushes a release tag)");
+assert(process.argv.length === 2, "Usage: pnpm run release (pushes a release tag)");
 assert.equal(git("status", "--porcelain"), "", "Release requires a clean working tree");
-git("ls-files", "--error-unmatch", "--", ...files, ".github/workflows/publish.yml");
+git("ls-files", "--error-unmatch", "--", ...files, "pnpm-lock.yaml", ".github/workflows/publish.yml");
 
 const version = readVersion();
-const notes = readFileSync(files[2], "utf8");
+const notes = readFileSync(files[1], "utf8");
 const title = notes.match(/^# Changelog\r?\n\r?\n/)?.[0] ?? "";
 const entries = notes.slice(title.length);
 const heading = title ? "##" : "#";
@@ -42,7 +38,7 @@ if (git("tag", "--list", tag)) {
 }
 run("git", "push", "--no-follow-tags", "origin", `${ref}:${ref}`);
 
-run(process.execPath, npm, "version", "patch", "--no-git-tag-version", "--ignore-scripts", "--save");
+execFileSync("pnpm", ["version", "patch", "--no-git-tag-version", "--ignore-scripts"], { stdio: "inherit" });
 const next = readVersion();
-writeFileSync(files[2], `${title}${heading} ${next}${newline}${newline}${entries}`);
+writeFileSync(files[1], `${title}${heading} ${next}${newline}${newline}${entries}`);
 run("git", "commit", "--only", "--message", `next version: ${next}`, "--", ...files);

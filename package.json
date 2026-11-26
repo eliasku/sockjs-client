@@ -27,10 +27,10 @@
     "format:check": "vp fmt --check",
     "test": "vp test",
     "build": "vp pack",
-    "check": "vp check && npm run typecheck",
-    "verify": "npm run check && npm test && npm run build",
+    "check": "vp check && pnpm run typecheck",
+    "verify": "pnpm run check && pnpm test && pnpm run build",
     "release": "tsx tools/release.ts",
-    "prepack": "npm run build"
+    "prepack": "pnpm run build"
   },
   "devDependencies": {
     "@types/node": "^26.6.6",
@@ -40,15 +40,9 @@
     "vite": "npm:@voidzero-dev/vite-plus-core@8.3.8000",
     "vite-plus": "1.7.0"
   },
-  "overrides": {
-    "vite": "npm:@voidzero-dev/vite-plus-core@8.3.8000"
-  },
-  "packageManager": "npm@12.2.2",
+  "packageManager": "pnpm@12.23.0",
   "engines": {
     "node": "^22.22.2 || ^24.15.0 || >=26.0.0"
-  },
-  "allowScripts": {
-    "esbuild": true
   },
   "publishConfig": {
     "access": "public"
